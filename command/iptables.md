@@ -257,12 +257,13 @@ cat /etc/sysconfig/iptables
 - filter表包含`INPUT`、`OUTPUT`、`FORWARD`三个规则链
 
 ```shell
-iptables -L -t nat                  # 列出 nat 上面的所有规则
+iptables -L                        #显示所有表中的规则
+iptables -L -t nat                  # 指定列出 nat 上面的所有规则
 #            ^ -t 参数指定，必须是 raw， nat，filter，mangle 中的一个
 iptables -L -t nat  --line-numbers  # 规则带编号
-iptables -L INPUT
-
-iptables -L -nv  # 查看，这个列表看起来更详细
+iptables -L INPUT           # 只显示INPUT链中的规则
+iptables -L -n   # 查看所有，添加-n选项后显示地址和端口的数字
+iptables -L -nv  # 这个列表看起来会比上面更详细
 ```
 
 #### 清除已有规则
@@ -299,10 +300,10 @@ iptables -D INPUT 8
 iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT               #允许本地回环接口(即运行本机访问本机)
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT    #允许已建立的或相关连的通行
 iptables -A OUTPUT -j ACCEPT         #允许所有本机向外的访问
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT    #允许访问22端口
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT    #允许访问80端口
-iptables -A INPUT -p tcp --dport 21 -j ACCEPT    #允许ftp服务的21端口
-iptables -A INPUT -p tcp --dport 20 -j ACCEPT    #允许FTP服务的20端口
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT    #允许TCP协议访问22端口
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT    #允许TCP协议访问80端口
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT    #允许ftp服务的21端口（TCP协议）
+iptables -A INPUT -p tcp --dport 20 -j ACCEPT    #允许FTP服务的20端口（TCP协议）
 iptables -A INPUT -j reject       #禁止其他未允许的规则访问
 iptables -A FORWARD -j REJECT     #禁止其他未允许的规则访问
 ```
