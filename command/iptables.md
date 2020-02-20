@@ -96,6 +96,8 @@ iptables(选项)(参数)
 | -p |  匹配协议,如tcp,udp,icmp |
 | --dport num | 匹配目标端口号 |
 | --sport num | 匹配来源端口号 |
+| --numeric -n | 地址和端口的数字输出模式 |
+| --verbose -v  | 详细输出模式 |
 
 #### 命令选项输入顺序
 
